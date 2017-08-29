@@ -1,22 +1,28 @@
 import requests 
 from bs4 import BeautifulSoup
 
-#Input = ioffer.com url
+def getURLFromUser():
+	url = raw_input("Please enter the review url for seller of a product you need: ")
+	print "you entered the following url: ", url
+	return url
+
+#page_url = ioffer.com url
 def getNumWebPages(page_url):
 	#append the page and sorting query parameters to url
-	url = page_url + "?page=100000000000000000&sort=default"
+	url = page_url #+ "?page=100000000000000000&sort=default"
+
+	#keep looping the page urls
 	req = requests.get(url)
-	soup = BeautifulSoup(req.content)
+	print "got the req"
+	soup = BeautifulSoup(req.content, "html.parser")
+	print "got the soup obj"
+	print(soup.prettify())
 	return soup
 
 
-
-
-def retrieveImageExtension(image_url):
-  file_ext = '.'+ image_url.split('.')[-1]
-  print("file_ext is: " + file_ext)
-  return file_ext
-
+def main():
+	page_url = getURLFromUser()
+	getNumWebPages(page_url);
 
 if __name__ == "__main__":
-  app.run(port=8000)
+  main()
