@@ -16,7 +16,13 @@ def getNumWebPages(page_url):
 	print "got the req"
 	soup = BeautifulSoup(req.content, "html.parser")
 	print "got the soup obj"
-	print(soup.prettify())
+	#print(soup.prettify())
+
+	#review comments are under a tag, with class='comment'
+	reviewComments = soup.find('a', class_="comment")
+	for r in reviewComments: 
+		print(reviewComments.string) 
+	#print(soup.find_all('a', class_="comment"))
 	return soup
 
 
