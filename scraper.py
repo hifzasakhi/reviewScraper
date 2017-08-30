@@ -10,29 +10,32 @@ def getURLFromUser():
 
 #page_url = ioffer.com url
 def getCommentAndSentiment(page_url):
-	#append the page and sorting query parameters to url
-	url = page_url #+ "?page=100000000000000000&sort=default"
 
-	#keep looping the page urls
+	#Going to scrape 3 latest pages of reviews 
+
+	for i in range (1, 7): 
+		if i == 1: 
+			url = page_url 
+		else:
+			#http://www.ioffer.com/ratings/bags789/new-handbags-bags-shoulder-bag-627601317?page=2&sort=default
+			url = page_url + "?page=" + str(i) + "&sort=default" 
+			print "modified page url is :", url	
 	req = requests.get(url)
-	print "got the req"
-	soup = BeautifulSoup(req.content, "html.parser")
-	print "got the soup obj"
-	#print(soup.prettify())
 
-	#review comments are under a tag, with class='comment'
+	soup = BeautifulSoup(req.content, "html.parser")
+	
 	reviewComments = soup.find_all("a", class_="comment")
 
 
 	for r in reviewComments: 
 		blob = TextBlob(r.text)
-		print r.text , "==> polarity:" , str(blob.sentiment.polarity), " ; " \
+		print "pageNum: ", i, " ", r.text , "==> polarity:" , str(blob.sentiment.polarity), " ; " \
 		"subjectivity:", str(blob.sentiment.subjectivity)
 		#using TextBlob library to do Sentiment Analysis
 		
 		#print(blob.sentiment.polarity)
 		
-	return soup
+	#return soup
 
 
 def main():
